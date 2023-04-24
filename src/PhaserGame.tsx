@@ -5,7 +5,7 @@ import GameConfig from "./phaser/config";
 // This is the component that will be rendered in the App component
 const PhaserGame: React.FC = () => {
 	// This is the reference to the div that will contain the Phaser game container
-	const gameContainer = useRef<HTMLDivElement>(null);
+	const gameContainer = useRef(null);
 
 	/*
 		The useEffect hook will be called when the component is mounted

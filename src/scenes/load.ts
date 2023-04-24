@@ -26,7 +26,7 @@ export default class Load extends Phaser.Scene {
 		}, this);
 
 		// DEBUG
-		for (let i = 0; i < 1000; i++) {
+		for (let i = 0; i < 100; i++) {
 			this.load.image(`logo-${i}`, '/vite.svg');
 		}
 	}
