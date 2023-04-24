@@ -174,3 +174,25 @@
     ```
 
     Now you can run the server with `npm start` from the `server` folder.
+
+12. Run the Vite development server and the Node.js server simultaneously:
+
+    To run both the Vite development server and the Node.js server at the same time, you can use a tool like `concurrently`. Install it as a development dependency in your main project folder:
+
+    ```bash
+    npm install --save-dev concurrently
+    ```
+
+    Then, open the `package.json` file in the root of your project and update the `scripts` section:
+
+    ```json
+    "scripts": {
+    	"start": "concurrently \"npm run dev\" \"cd server && npm start\"",
+    	"dev": "vite",
+    	"build": "tsc && vite build",
+    	"lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    	"serve": "vite preview"
+    },
+    ```
+
+    Now you can run the development server with `npm start` from the root of your project.
