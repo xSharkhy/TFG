@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.3] - 2023-04-26
+
+### Added
+
+- Added Authentication forms.
+- Added `TailwindCSS` to the project. For now, it's only used on basic forms.
+- Added basic routing to the project, now you can navigate between the login and register pages.
+
+### Changed
+
+- Refactored whole project, now it's more organized and easier to understand.
+- Resolved correctly the problem with `mongoose` not reading `localhost` as a valid host, now using `127.0.0.1`.
+
 ## [0.0.2] - 2023-04-25
 
 ### Added
@@ -28,3 +41,4 @@ All notable changes to this project will be documented in this file.
 
 [0.0.1]: https://github.com/xSharkhy/TFG/releases/tag/v0.0.1
 [0.0.2]: https://github.com/xSharkhy/TFG/compare/v0.0.1...v0.0.2
+[0.0.3]: https://github.com/xSharkhy/TFG/compare/v0.0.2...v0.0.3
