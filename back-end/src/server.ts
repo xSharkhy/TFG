@@ -6,7 +6,7 @@ const app: Application = express();
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/projectTFG';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/projectTFG';
 
 mongoose
 	.connect(MONGO_URI)
