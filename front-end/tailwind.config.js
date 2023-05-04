@@ -1,11 +1,11 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: [
-		"./index.html",
-		"./src/**/*.{js,ts,jsx,tsx}",
-	],
-	theme: {
-		extend: {
+    content: [
+        "./index.html",
+        "./src/**/*.{js,ts,jsx,tsx}",
+    ],
+    theme: {
+        extend: {
             colors: {
                 'dark-charcoal': '#0e0c0c',
                 'dark-mulberry': '#5f2d56',
@@ -40,6 +40,6 @@ export default {
                 'black-bean': '#483b3a',
             },
         },
-	},
-	plugins: [],
+    },
+    plugins: [],
 }
