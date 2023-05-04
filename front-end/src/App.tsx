@@ -12,14 +12,13 @@ const App: React.FC = () => {
         <div className="flex flex-col min-h-screen">
             <Router>
                 <Header isLoggedIn={false} />
-                <Routes>
-                    <Route path="/" element={<HomeScreen />} />
-                    <Route path="/game" element={<PhaserGame />} />
-                    <Route path="/login" element={<LoginForm />} />
-                    <Route path="/signup" element={<SignupForm />} />
-                </Routes>
                 <main className="flex-grow">
-                    <Routes></Routes>
+                    <Routes>
+                        <Route path="/" element={<HomeScreen />} />
+                        <Route path="/game" element={<PhaserGame />} />
+                        <Route path="/login" element={<LoginForm />} />
+                        <Route path="/signup" element={<SignupForm />} />
+                    </Routes>
                 </main>
                 <Footer />
             </Router>
