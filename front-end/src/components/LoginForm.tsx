@@ -12,11 +12,14 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             if (emailOrUsername.includes("@")) {
-                await login(emailOrUsername, null, password); // login with email
+                await login(emailOrUsername, null, password).then(() => {
+                    navigate("/"); // Redirect to the main page
+                }); // login with email
             } else {
-                await login(null, emailOrUsername, password); // login with username
+                await login(null, emailOrUsername, password).then(() => {
+                    navigate("/"); // Redirect to the main page
+                }); // login with username
             }
-            navigate("/"); // Redirect to the main page
         } catch (error) {
             alert(error.response.data.message); // Show an error message
         }

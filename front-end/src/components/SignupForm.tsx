@@ -1,19 +1,24 @@
 import React, { useState } from "react";
 import { useAuth } from "../auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const SignupForm = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { signup } = useAuth();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("Submitting form...");
         try {
-            await signup(username, email, password);
-            // Redirect to the main page or show a success message
+            await signup(username, email, password).then(() => {
+                navigate("/"); // Redirect to the main page
+            });
         } catch (error) {
             // Show an error message
+            alert(error.response.data.message);
         }
     };
 
