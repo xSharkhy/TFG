@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                                 </li>
                                 <li>
                                     <Link
-                                        to="/register"
+                                        to="/signup"
                                         className="px-4 py-2 font-bold text-white rounded bg-lime-green hover:bg-kelly-green"
                                     >
                                         Register
