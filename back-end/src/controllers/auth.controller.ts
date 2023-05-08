@@ -1,12 +1,13 @@
+
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
 
 export const signup = async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
 
     try {
-        const user = await User.create({ email, password });
+        const user = await User.create({ username, email, password });
         const token = jwt.sign({ email: user.email }, 'shhhhh');
 
         res.status(201).json({ user: user._id, token });
@@ -17,10 +18,12 @@ export const signup = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { emailOrUsername, password } = req.body;
 
     try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({
+            $or: [{ email: emailOrUsername }, { username: emailOrUsername }],
+        });
 
         if (!user || !user.comparePassword(password)) {
             return res.status(401).send('Invalid email or password');

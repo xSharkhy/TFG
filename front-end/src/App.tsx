@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import PhaserGame from "./PhaserGame";
+import PhaserGame from "./screens/PhaserGame";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import HomeScreen from "./screens/HomeScreen";

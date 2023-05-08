@@ -1,7 +1,6 @@
 import express, { Application } from 'express';
 import mongoose from 'mongoose';
 import authRoutes from './routes/auth.routes';
-import { errorHandler } from './middleware/error.middleware';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
@@ -24,9 +23,6 @@ mongoose
     .connect(MONGO_URI)
     .then(() => console.log('MongoDB connected'))
     .catch((err) => console.error(err));
-
-// Error handling middleware
-app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
