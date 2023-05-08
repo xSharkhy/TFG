@@ -1,41 +1,36 @@
 import { Request, Response } from 'express';
-import User from '../models/user.model';
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import User from '../models/user.model';
 
-class AuthController {
-    async signup(req: Request, res: Response) {
-        try {
-            const user = User.build(req.body);
-            await user.save();
-            const userWithoutPassword = user.toObject();
-            delete userWithoutPassword.password;
-            res.status(201).send(userWithoutPassword);
-        } catch (error) {
-            res.status(400).send(error);
-        }
+export const signup = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.create({ email, password });
+        const token = jwt.sign({ email: user.email }, 'shhhhh');
+
+        res.status(201).json({ user: user._id, token });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error creating user');
     }
+};
 
+export const login = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
 
-    async login(req: Request, res: Response) {
-        try {
-            const user = await User.findOne({ email: req.body.email });
-            if (!user) {
-                return res.status(400).send('Invalid email or password');
-            }
+    try {
+        const user = await User.findOne({ email });
 
-            const isMatch = await bcrypt.compare(req.body.password, user.password);
-            if (!isMatch) {
-                return res.status(400).send('Invalid email or password');
-            }
-
-            const token = jwt.sign({ _id: user._id }, 'your_jwt_secret');
-            res.send({ token });
-        } catch (error) {
-            res.status(400).send('Invalid email or password');
+        if (!user || !user.comparePassword(password)) {
+            return res.status(401).send('Invalid email or password');
         }
+
+        const token = jwt.sign({ email: user.email }, 'shhhhh');
+
+        res.status(200).json({ user: user._id, token });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error logging in');
     }
-
-}
-
-export default new AuthController();
+};

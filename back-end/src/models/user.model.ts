@@ -2,29 +2,27 @@ import mongoose, { Document, Model, Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import IUser from '../interfaces/user.interface';
 
-export interface UserDocument extends IUser, Document { }
 
-export interface UserModel extends Model<UserDocument> {
-    build(attrs: IUser): UserDocument;
-}
-
-const userSchema = new Schema<UserDocument, UserModel>({
-    username: { type: String, required: true },
+const userSchema = new Schema<IUser>({
+    username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+}, { timestamps: true }
+);
+
+userSchema.pre<IUser>('save', async function (next) {
+    const user = this;
+    bcrypt.hash(user.password, 10, function (err, hash) {
+        if (err) {
+            return next(err);
+        }
+        user.password = hash;
+        next();
+    } as (err: any, hash: string) => void);
 });
 
-userSchema.pre('save', async function (next) {
-    if (!this.isModified('password')) return next();
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-    next();
-});
-
-userSchema.statics.build = (attrs: IUser) => {
-    return new User(attrs);
+userSchema.methods.comparePassword = function (password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.model<UserDocument, UserModel>('User', userSchema);
-
-export default User;
+export default mongoose.model<IUser>('User', userSchema);
