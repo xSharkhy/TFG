@@ -6,23 +6,23 @@ import SignupForm from "./components/SignupForm";
 import HomeScreen from "./screens/HomeScreen";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Lorem from "./components/Lorem";
 
 const App: React.FC = () => {
     return (
-        <div className="flex flex-col min-h-screen">
-            <Router>
-                <Header isLoggedIn={false} />
-                <main className="flex-grow">
-                    <Routes>
-                        <Route path="/" element={<HomeScreen />} />
-                        <Route path="/game" element={<PhaserGame />} />
-                        <Route path="/login" element={<LoginForm />} />
-                        <Route path="/signup" element={<SignupForm />} />
-                    </Routes>
-                </main>
-                <Footer />
-            </Router>
-        </div>
+        <Router>
+            <Header isLoggedIn={false} />
+            <main className="container mx-auto">
+                <Routes>
+                    <Route path="/" element={<HomeScreen />} />
+                    <Route path="/game" element={<PhaserGame />} />
+                    <Route path="/login" element={<LoginForm />} />
+                    <Route path="/signup" element={<SignupForm />} />
+                    <Route path="/terms" element={<Lorem />} />
+                </Routes>
+            </main>
+            <Footer />
+        </Router>
     );
 };
 

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const HomeScreen: React.FC = () => {
     return (
-        <div className="flex flex-row items-center justify-center h-screen text-white bg-dark-charcoal">
+        <div className="flex flex-row items-center justify-center h-full pt-48 text-white bg-dark-charcoal">
             <div className="flex flex-col items-center justify-center w-1/2">
                 <h1 className="mb-8 text-6xl font-bold text-center">
                     Dungeon Crawler Game

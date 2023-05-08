@@ -13,7 +13,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     };
 
     const handleLogoutClick = () => {
-        // Replace with your own logic for logging out the user
+        // Replace with logic for logging out the user
     };
 
     return (
