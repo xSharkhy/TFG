@@ -13,7 +13,11 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     };
 
     const handleLogoutClick = () => {
-        // Replace with logic for logging out the user
+        // Remove the JWT token from local storage
+        localStorage.removeItem("token");
+
+        // Redirect the user to the login page
+        window.location.href = "/";
     };
 
     return (
