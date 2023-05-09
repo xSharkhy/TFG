@@ -1,4 +1,3 @@
-
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
@@ -7,7 +6,8 @@ export const signup = async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
 
     try {
-        const user = await User.create({ username, email, password });
+        const user = new User({ username, email, password });
+        await user.save();
         const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET || 'shhhhh', { expiresIn: '7d' });
 
         res.status(201).json({ user: user._id, token });
@@ -41,3 +41,6 @@ export const login = async (req: Request, res: Response) => {
         res.status(500).send('Error logging in');
     }
 };
+
+
+

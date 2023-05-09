@@ -1,3 +1,4 @@
+
 import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import IUser from '../interfaces/user.interface';
@@ -13,14 +14,14 @@ const userSchema = new Schema<IUser>({
 userSchema.pre<IUser>('save', async function (next) {
     const user = this;
 
-    // Hash the password with a salt round of 10, the higher the rounds the more secure, but the slower
-    bcrypt.hash(user.password, 10, function (err, hash) {
-        if (err) {
-            return next(err);
-        }
+    try {
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(user.password, salt);
         user.password = hash;
         next();
-    } as (err: any, hash: string) => void);
+    } catch (err: any) {
+        return next(err);
+    }
 });
 
 userSchema.methods.comparePassword = function (password: string): Promise<boolean> {
