@@ -4,8 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
--   Terms and conditions, privacy policy and cookies policy are now available on the footer, though they are not implemented yet.
 -   Blocking certain routes if the user is or not logged in.
+
+## [0.0.5] - 2023-05-09
+
+### Added
+
+-   Visual improvements on the login and register forms.
+-   Password encryption with `bcrypt`.
+-   Serverside feedback on login and register forms.
+-   Auth is now working, you can login and register with your account.
 
 ## [0.0.4] - 2023-05-08
 
@@ -63,3 +71,4 @@ All notable changes to this project will be documented in this file.
 [0.0.2]: https://github.com/xSharkhy/TFG/compare/v0.0.1...v0.0.2
 [0.0.3]: https://github.com/xSharkhy/TFG/compare/v0.0.2...v0.0.3
 [0.0.4]: https://github.com/xSharkhy/TFG/compare/v0.0.3...v0.0.4
+[0.0.5]: https://github.com/xSharkhy/TFG/compare/v0.0.4...v0.0.5
