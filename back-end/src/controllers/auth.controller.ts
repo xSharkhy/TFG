@@ -8,12 +8,16 @@ export const signup = async (req: Request, res: Response) => {
 
     try {
         const user = await User.create({ username, email, password });
-        const token = jwt.sign({ email: user.email }, 'shhhhh');
+        const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET || 'shhhhh', { expiresIn: '7d' });
 
         res.status(201).json({ user: user._id, token });
-    } catch (error) {
+    } catch (error: any) {
         console.error(error);
-        res.status(500).send('Error creating user');
+        if (error.code === 11000) {
+            res.status(409).send('Email or username already exists');
+        } else {
+            res.status(500).send('Error creating user');
+        }
     }
 };
 
@@ -25,7 +29,7 @@ export const login = async (req: Request, res: Response) => {
             $or: [{ email: emailOrUsername }, { username: emailOrUsername }],
         });
 
-        if (!user || !user.comparePassword(password)) {
+        if (!user || !(await user.comparePassword(password))) {
             return res.status(401).send('Invalid email or password');
         }
 
