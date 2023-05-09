@@ -24,7 +24,12 @@ const SignupForm = () => {
             if (response.status === 201) {
                 localStorage.setItem("token", response.data.token);
                 console.log("User created successfully");
-                navigate("/login"); // Redirect to the login page
+                // Wait for the token to be stored
+                await new Promise((resolve) => setTimeout(resolve, 500)).then(
+                    () => {
+                        navigate("/"); // Redirect to the home page
+                    }
+                );
             }
         } catch (error) {
             alert(error.response.data.message); // Show an error message

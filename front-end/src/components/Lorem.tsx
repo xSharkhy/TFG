@@ -2,8 +2,8 @@ import React from "react";
 
 const Lorem: React.FC = () => {
     return (
-        <div className="flex flex-col items-center justify-center h-screen text-white bg-dark-charcoal">
-            <div className="flex flex-col items-center justify-center w-1/2">
+        <div className="flex flex-row items-center justify-center h-full text-white py-36 bg-dark-charcoal">
+            <div className="flex flex-col items-center justify-center w-2/3">
                 <h1 className="mb-8 text-6xl font-bold text-center">
                     Lorem ipsum dolor sit amet
                 </h1>
@@ -11,7 +11,7 @@ const Lorem: React.FC = () => {
                     "Neque porro quisquam est qui dolorem ipsum quia dolor sit
                     amet, consectetur, adipisci velit..."
                 </h4>
-                <p className="px-12 mb-8 text-xl text-center">
+                <p className="px-12 mb-8 text-xl">
                     consectetur adipiscing elit. Nullam luctus nibh eu erat
                     consectetur, ullamcorper maximus ipsum lobortis. Proin
                     tincidunt augue dui, consectetur accumsan nulla venenatis
@@ -22,7 +22,7 @@ const Lorem: React.FC = () => {
                     cursus imperdiet. Curabitur rutrum lacinia urna. Praesent
                     quis mauris nulla. Cras et aliquam arcu.
                 </p>
-                <p className="px-12 mb-8 text-xl text-center">
+                <p className="px-12 mb-8 text-xl">
                     Morbi blandit molestie efficitur. Praesent libero velit,
                     accumsan vitae porttitor non, euismod eu justo. Nam ac
                     sapien tincidunt ex vestibulum sollicitudin in et justo.
@@ -35,7 +35,7 @@ const Lorem: React.FC = () => {
                     velit. Aenean laoreet augue ac mattis elementum. Duis
                     malesuada turpis a risus auctor faucibus.
                 </p>
-                <p className="px-12 mb-8 text-xl text-center">
+                <p className="px-12 mb-8 text-xl">
                     Nulla volutpat lorem sit amet arcu cursus hendrerit. Donec
                     interdum urna vel hendrerit viverra. Cras efficitur, felis
                     auctor finibus tempus, metus eros commodo augue, a convallis
@@ -51,7 +51,7 @@ const Lorem: React.FC = () => {
                     sit amet quis dolor. Aenean in ante sit amet turpis accumsan
                     fermentum vitae a massa.
                 </p>
-                <p className="px-12 mb-8 text-xl text-center">
+                <p className="px-12 mb-8 text-xl">
                     Nam varius tortor non augue maximus ultricies. Integer nec
                     diam eu sem pharetra aliquam id vel est. Proin vel imperdiet
                     orci. Nulla vel commodo leo. Nam luctus vulputate metus, eu
@@ -68,7 +68,7 @@ const Lorem: React.FC = () => {
                     fringilla eu efficitur viverra, porta ac nunc. Vestibulum
                     consectetur diam ut purus rhoncus euismod.
                 </p>
-                <p className="px-12 mb-8 text-xl text-center">
+                <p className="px-12 mb-8 text-xl">
                     Donec pellentesque nulla risus, vitae aliquam enim semper
                     et. Ut nisl nisl, porttitor consectetur pulvinar et, iaculis
                     eget libero. In hac habitasse platea dictumst. Pellentesque

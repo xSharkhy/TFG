@@ -30,6 +30,8 @@ const App: React.FC = () => {
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/signup" element={<SignupForm />} />
                     <Route path="/terms" element={<Lorem />} />
+                    <Route path="/cookies" element={<Lorem />} />
+                    <Route path="/privacy" element={<Lorem />} />
                 </Routes>
             </main>
             <Footer />

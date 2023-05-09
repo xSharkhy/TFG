@@ -22,7 +22,12 @@ const LoginForm = () => {
             if (response.status === 200) {
                 localStorage.setItem("token", response.data.token);
                 console.log("User logged in successfully");
-                navigate("/"); // Redirect to the home page
+                // Wait for the token to be stored
+                await new Promise((resolve) => setTimeout(resolve, 500)).then(
+                    () => {
+                        navigate("/"); // Redirect to the home page
+                    }
+                );
             }
         } catch (error) {
             alert(error.response.data.message); // Show an error message
@@ -40,7 +45,7 @@ const LoginForm = () => {
                     id="emailOrUsername"
                     value={emailOrUsername}
                     onChange={(e) => setEmailOrUsername(e.target.value)}
-                    className="p-2 mb-4 border-2 border-gray-300"
+                    className="p-2 mb-4 border-2 border-gray-300 rounded-md"
                 />
                 <label htmlFor="password" className="mb-2">
                     Password
@@ -50,7 +55,7 @@ const LoginForm = () => {
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="p-2 mb-4 border-2 border-gray-300"
+                    className="p-2 mb-4 border-2 border-gray-300 rounded-md"
                 />
                 <button type="submit" className="p-2 text-white bg-blue-500">
                     Login
