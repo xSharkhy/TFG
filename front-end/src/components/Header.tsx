@@ -23,7 +23,9 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     return (
         <header className="sticky top-0 py-4 text-white bg-dark-charcoal">
             <div className="container flex items-center justify-between mx-auto">
-                <h1 className="text-2xl font-bold">Dungeon Crawler Game</h1>
+                <h1 className="text-2xl font-bold">
+                    <Link to="/">Dungeon Crawler Game</Link>
+                </h1>
                 <nav>
                     <ul className="flex">
                         {!isLoggedIn ? (

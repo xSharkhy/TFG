@@ -32,6 +32,19 @@ const App: React.FC = () => {
                     <Route path="/terms" element={<Lorem />} />
                     <Route path="/cookies" element={<Lorem />} />
                     <Route path="/privacy" element={<Lorem />} />
+                    <Route
+                        path="*"
+                        element={
+                            <div className="flex flex-col items-center justify-center h-full text-white py-36 bg-dark-charcoal">
+                                <h1 className="mb-16 text-6xl font-bold text-center">
+                                    ...Oops!
+                                </h1>
+                                <h2 className="text-2xl font-bold text-center">
+                                    Page not found
+                                </h2>
+                            </div>
+                        }
+                    />
                 </Routes>
             </main>
             <Footer />
