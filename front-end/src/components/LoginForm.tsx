@@ -1,11 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
     const [emailOrUsername, setEmailOrUsername] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,7 +23,7 @@ const LoginForm = () => {
                 // Wait for the token to be stored
                 await new Promise((resolve) => setTimeout(resolve, 500)).then(
                     () => {
-                        navigate("/"); // Redirect to the home page
+                        window.location.href = "/"; // Redirect to the home page
                     }
                 );
             }

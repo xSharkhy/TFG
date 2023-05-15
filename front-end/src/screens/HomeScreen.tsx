@@ -14,7 +14,7 @@ const HomeScreen: React.FC = () => {
                 </p>
                 <Link
                     to="/game"
-                    className="px-6 py-3 text-xl font-bold text-white rounded bg-lime-green hover:bg-kelly-green"
+                    className="px-6 py-3 text-xl font-bold text-white rounded bg-forest-green hover:bg-kelly-green"
                 >
                     Play Now
                 </Link>
