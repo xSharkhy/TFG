@@ -1,0 +1,104 @@
+{
+	"textures": [
+		{
+			"image": "deto.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 15,
+				"h": 66
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "necromancer_anim_f2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 23
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 6,
+						"w": 15,
+						"h": 17
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 15,
+						"h": 17
+					}
+				},
+				{
+					"filename": "necromancer_anim_f0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 23
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 7,
+						"w": 15,
+						"h": 16
+					},
+					"frame": {
+						"x": 0,
+						"y": 17,
+						"w": 15,
+						"h": 16
+					}
+				},
+				{
+					"filename": "necromancer_anim_f3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 23
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 8,
+						"w": 15,
+						"h": 15
+					},
+					"frame": {
+						"x": 0,
+						"y": 33,
+						"w": 15,
+						"h": 15
+					}
+				},
+				{
+					"filename": "necromancer_anim_f1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 16,
+						"h": 23
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 5,
+						"w": 14,
+						"h": 18
+					},
+					"frame": {
+						"x": 0,
+						"y": 48,
+						"w": 14,
+						"h": 18
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:853267207b1fa3119b5cd8536f286c39:7f6e9d5e6bb3a28cbd1fc3aa1b4661c3:b52894c263ab11c82da7e0d25890845a$"
+	}
+}

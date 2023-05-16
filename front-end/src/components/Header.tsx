@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     <ul className="flex">
                         {!isLoggedIn ? (
                             <>
-                                <li className="mr-4">
+                                <li className="mx-12">
                                     <Link
                                         to="/login"
                                         className="hover:text-lime-green"
@@ -49,6 +49,14 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                             </>
                         ) : (
                             <>
+                                <li className="mx-12">
+                                    <Link
+                                        to="/game"
+                                        className="hover:text-lime-green"
+                                    >
+                                        Play
+                                    </Link>
+                                </li>
                                 <li className="relative">
                                     <button
                                         onClick={handleAccountClick}
