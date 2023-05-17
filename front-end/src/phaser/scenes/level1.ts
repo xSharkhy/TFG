@@ -1,10 +1,10 @@
 import debugDraw from '../utilities/debug';
-import { createChortAnims } from '../phaser/animations/EnemyAnims';
-import { createLonkAnims } from '../phaser/animations/CharacterAnims';
-import Chort from '../phaser/enemies/Chort';
+import { createChortAnims } from '../animations/EnemyAnims';
+import { createLonkAnims } from '../animations/CharacterAnims';
+import Chort from '../enemies/Chort';
 
-import Lonk from './../phaser/characters/Lonk';
-import '../phaser/characters/Lonk';
+import Lonk from '../characters/Lonk';
+import '../characters/Lonk';
 
 export default class Level1 extends Phaser.Scene {
 

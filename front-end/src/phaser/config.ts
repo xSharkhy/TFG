@@ -1,6 +1,6 @@
-import Load from '../scenes/load';
-import Menu from '../scenes/menu';
-import Level1 from '../scenes/level1';
+import Load from './scenes/load';
+import Menu from './scenes/menu';
+import Level1 from './scenes/level1';
 
 const GameConfig: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
