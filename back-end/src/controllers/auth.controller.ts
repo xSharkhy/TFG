@@ -1,6 +1,22 @@
 import { Request, Response } from 'express';
+import { UserRequest } from '../interfaces/types';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
+
+export const getUser = async (req: UserRequest, res: Response) => {
+    const userId = req.user ? req.user._id : null;
+    const user = await User.findById(userId);
+
+    if (!user) {
+        return res.status(404).send('User not found');
+    }
+
+    res.status(200).json({
+        username: user.username,
+        email: user.email
+    });
+}
+
 
 export const signup = async (req: Request, res: Response) => {
     const { username, email, password } = req.body;
@@ -41,6 +57,3 @@ export const login = async (req: Request, res: Response) => {
         res.status(500).send('Error logging in');
     }
 };
-
-
-

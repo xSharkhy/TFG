@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     }, []);
 
     return (
-        <header className="sticky top-0 py-4 text-white bg-dark-charcoal">
+        <header className="sticky top-0 px-8 py-4 text-white bg-dark-charcoal">
             <div className="container flex items-center justify-between mx-auto">
                 <h1 className="text-2xl font-bold">
                     <Link to="/">Dungeon Crawler Game</Link>
@@ -83,10 +83,10 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                                         <ul className="absolute right-0 px-4 py-2 text-white rounded shadow-lg top-full bg-dark-charcoal">
                                             <li className="mb-2">
                                                 <Link
-                                                    to="/achievements"
+                                                    to="/account"
                                                     className="hover:text-lime-green"
                                                 >
-                                                    Achievements
+                                                    Profile
                                                 </Link>
                                             </li>
                                             <li>

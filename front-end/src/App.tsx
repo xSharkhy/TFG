@@ -14,6 +14,7 @@ const App: React.FC = () => {
             <main className="container mx-auto">
                 <Routes>
                     <Route index path="/" element={<HomeScreen />} />
+                    {/* <Route path="/account" element={<UserProfile />} /> */}
                     <Route path="/game" element={<PhaserGame />} />
                     <Route path="/login" element={<LoginForm />} />
                     <Route path="/signup" element={<SignupForm />} />

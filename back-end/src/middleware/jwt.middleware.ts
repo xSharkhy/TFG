@@ -1,5 +1,6 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { UserRequest } from '../interfaces/types';
 
 interface DecodedUser {
     _id: string;
@@ -8,7 +9,7 @@ interface DecodedUser {
 const jwtSecret = process.env.JWT_SECRET || 'your_jwt_secret';
 
 export const jwtMiddleware = (
-    req: Request,
+    req: UserRequest,
     res: Response,
     next: NextFunction
 ) => {
