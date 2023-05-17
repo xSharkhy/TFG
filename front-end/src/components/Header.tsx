@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 interface HeaderProps {
@@ -6,19 +6,34 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
-    const [isAccountOpen, setIsAccountOpen] = React.useState(false);
+    const [isAccountOpen, setIsAccountOpen] = useState(false);
+    const accountRef = useRef<HTMLLIElement>(null);
 
     const handleAccountClick = () => {
         setIsAccountOpen(!isAccountOpen);
     };
 
     const handleLogoutClick = () => {
-        // Remove the JWT token from local storage
         localStorage.removeItem("token");
-
-        // Redirect the user to the login page
         window.location.href = "/";
     };
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                accountRef.current &&
+                !accountRef.current.contains(event.target as Node)
+            ) {
+                setIsAccountOpen(false);
+            }
+        };
+
+        window.addEventListener("click", handleClickOutside);
+
+        return () => {
+            window.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
 
     return (
         <header className="sticky top-0 py-4 text-white bg-dark-charcoal">
@@ -52,12 +67,12 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                                 <li className="mx-12">
                                     <Link
                                         to="/game"
-                                        className="hover:text-lime-green"
+                                        className="px-4 py-2 font-bold text-white rounded bg-forest-green hover:bg-kelly-green"
                                     >
                                         Play
                                     </Link>
                                 </li>
-                                <li className="relative">
+                                <li className="relative" ref={accountRef}>
                                     <button
                                         onClick={handleAccountClick}
                                         className="hover:text-lime-green"
