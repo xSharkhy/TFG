@@ -1,4 +1,3 @@
-
 import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import IUser from '../interfaces/user.interface';
