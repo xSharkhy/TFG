@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Route,
+    Routes,
+    Navigate,
+} from "react-router-dom";
 import { Header, Footer, LoginForm, SignupForm, Lorem } from "./components";
 import PhaserGame from "./screens/PhaserGame";
 import HomeScreen from "./screens/HomeScreen";
@@ -14,10 +19,30 @@ const App: React.FC = () => {
             <main className="container mx-auto">
                 <Routes>
                     <Route index path="/" element={<HomeScreen />} />
-                    {/* <Route path="/account" element={<UserProfile />} /> */}
-                    <Route path="/game" element={<PhaserGame />} />
-                    <Route path="/login" element={<LoginForm />} />
-                    <Route path="/signup" element={<SignupForm />} />
+                    {isLoggedIn && (
+                        <>
+                            {/* <Route path="/account" element={<UserProfile />} /> */}
+                            <Route path="/game" element={<PhaserGame />} />
+                            <Route
+                                path="/login"
+                                element={<Navigate to="/" />}
+                            />
+                            <Route
+                                path="/signup"
+                                element={<Navigate to="/" />}
+                            />
+                        </>
+                    )}
+                    {!isLoggedIn && (
+                        <>
+                            <Route
+                                path="/game"
+                                element={<Navigate to="/login" />}
+                            />
+                            <Route path="/login" element={<LoginForm />} />
+                            <Route path="/signup" element={<SignupForm />} />
+                        </>
+                    )}
                     <Route path="/terms" element={<Lorem />} />
                     <Route path="/cookies" element={<Lorem />} />
                     <Route path="/privacy" element={<Lorem />} />
