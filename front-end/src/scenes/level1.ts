@@ -24,6 +24,9 @@ export default class Level1 extends Phaser.Scene {
     }
 
     create() {
+        createLonkAnims(this.anims);
+        createChortAnims(this.anims);
+
         const { width, height } = this.scale;
         const centerX = width * 0.5;
         const centerY = height * 0.5;
@@ -37,11 +40,10 @@ export default class Level1 extends Phaser.Scene {
 
         wallsLayer.setCollisionByProperty({ collide: true });
 
+        this.player = this.add.lonk(centerX, centerY, 'lonk');
+
         // debugDraw(wallsLayer, this);
 
-        this.player = this.add.lonk(centerX, centerY, 'lonk');
-        createLonkAnims(this.anims);
-        createChortAnims(this.anims);
         // Enemy
 
         const enemies = this.physics.add.group({
@@ -62,10 +64,10 @@ export default class Level1 extends Phaser.Scene {
 
     private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 
-        const enemy = obj2 as Chort;
+        const lizard = obj2 as Chort;
 
-        const dx = this.player.x - enemy.x;
-        const dy = this.player.y - enemy.y;
+        const dx = this.player.x - lizard.x;
+        const dy = this.player.y - lizard.y;
 
         const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
 

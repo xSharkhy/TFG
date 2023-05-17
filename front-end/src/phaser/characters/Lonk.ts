@@ -22,7 +22,7 @@ export default class Lonk extends Phaser.Physics.Arcade.Sprite {
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
         super(scene, x, y, texture, frame);
-        this.anims.play('idle_lonk', true);
+        this.anims.play('idle_lonk');
     }
 
     handleDamage(dir: Phaser.Math.Vector2): void {
@@ -34,7 +34,9 @@ export default class Lonk extends Phaser.Physics.Arcade.Sprite {
         this.deltaDamage = 0;
     }
 
-    protected preUpdate(time: number, delta: number): void {
+    preUpdate(time: number, delta: number): void {
+
+        super.preUpdate(time, delta);
         switch (this.healthState) {
             case HealthState.IDLE:
                 break;
@@ -51,6 +53,7 @@ export default class Lonk extends Phaser.Physics.Arcade.Sprite {
 
     update(cursors: Phaser.Types.Input.Keyboard.CursorKeys): void {
 
+        if (this.healthState === HealthState.DAMAGE || this.healthState === HealthState.DEAD) return;
         if (!cursors) return;
 
         const speed = 100;

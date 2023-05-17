@@ -43,7 +43,7 @@ export default class Chort extends Phaser.Physics.Arcade.Sprite {
         super.destroy(fromScene);
     }
 
-    protected preUpdate(time: number, delta: number): void {
+    preUpdate(time: number, delta: number): void {
         super.preUpdate(time, delta);
 
         const speed = 50;
@@ -62,7 +62,6 @@ export default class Chort extends Phaser.Physics.Arcade.Sprite {
             case Movement.DOWN:
                 this.setVelocityY(speed);
                 break;
-
         }
     }
 
