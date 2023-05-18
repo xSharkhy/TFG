@@ -1,6 +1,9 @@
 import express, { Application } from 'express';
 import mongoose from 'mongoose';
-import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
+import blogRoutes from './routes/blog.routes';
+import forumRoutes from './routes/forum.routes';
+import jobApplicationRoutes from './routes/jobApplication.routes';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
@@ -13,7 +16,10 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/auth', authRoutes);
+app.use('/auth', userRoutes);
+app.use('/blog', blogRoutes);
+app.use('/forum', forumRoutes);
+app.use('/jobApplication', jobApplicationRoutes);
 
 // MongoDB connection
 const PORT = process.env.PORT || 5000;

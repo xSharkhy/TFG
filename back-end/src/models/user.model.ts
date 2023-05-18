@@ -3,12 +3,14 @@ import bcrypt from 'bcryptjs';
 import IUser from '../interfaces/user.interface';
 
 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-}, { timestamps: true }
-);
+    role: { type: String, enum: ['admin', 'user'], default: 'user' },
+    profilePicture: { type: String, default: '' },
+    birthday: { type: Date, default: null },
+}, { timestamps: true });
 
 userSchema.pre<IUser>('save', async function (next) {
     const user = this;

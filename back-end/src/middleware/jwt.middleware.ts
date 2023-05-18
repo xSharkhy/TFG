@@ -1,29 +1,13 @@
-import { Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { UserRequest } from '../interfaces/types';
 
-interface DecodedUser {
-    _id: string;
-}
-
-const jwtSecret = process.env.JWT_SECRET || 'your_jwt_secret';
-
-export const jwtMiddleware = (
-    req: UserRequest,
-    res: Response,
-    next: NextFunction
-) => {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
-    if (!token) {
-        return res.status(401).send('Access denied. No token provided.');
-    }
-
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     try {
-        const decoded = jwt.verify(token, jwtSecret) as DecodedUser;
-        req.user = { _id: decoded._id };
+        const token = (req.header('Authorization') as string).replace('Bearer ', '');
+        const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
+        req.userId = decoded.userId;
         next();
     } catch (error) {
-        res.status(400).send('Invalid token.');
+        res.status(401).json({ error: 'Please authenticate' });
     }
 };
-
