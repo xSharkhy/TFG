@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import CustomRequest from '../interfaces/types';
 import JobApplication from '../models/application.model';
 
 export const getAllJobApplications = async (req: Request, res: Response) => {
@@ -22,7 +23,7 @@ export const getJobApplicationById = async (req: Request, res: Response) => {
     }
 };
 
-export const createJobApplication = async (req: Request, res: Response) => {
+export const createJobApplication = async (req: CustomRequest, res: Response) => {
     try {
         const jobApplication = new JobApplication({ ...req.body, applicant: req.userId });
         await jobApplication.save();

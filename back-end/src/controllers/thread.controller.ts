@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import CustomRequest from '../interfaces/types';
 import mongoose, { Types } from 'mongoose';
 import ForumThread from '../models/thread.model';
 import IComment from '../interfaces/comment.interface';
@@ -24,7 +25,7 @@ export const getForumThreadById = async (req: Request, res: Response) => {
     }
 };
 
-export const createForumThread = async (req: Request, res: Response) => {
+export const createForumThread = async (req: CustomRequest, res: Response) => {
     try {
         const forumThread = new ForumThread({ ...req.body, author: req.userId });
         await forumThread.save();
@@ -58,7 +59,7 @@ export const deleteForumThread = async (req: Request, res: Response) => {
     }
 };
 
-export const addComment = async (req: Request, res: Response) => {
+export const addComment = async (req: CustomRequest, res: Response) => {
     try {
         const forumThread = await ForumThread.findById(req.params.threadId);
         if (!forumThread) {

@@ -1,5 +1,6 @@
 import BlogPost from '../models/post.model';
 import { Request, Response } from 'express';
+import CustomRequest, { decodeToken } from '../interfaces/types';
 
 export const getAllBlogPosts = async (req: Request, res: Response) => {
     try {
@@ -22,9 +23,11 @@ export const getBlogPostById = async (req: Request, res: Response) => {
     }
 };
 
-export const createBlogPost = async (req: Request, res: Response) => {
+export const createBlogPost = async (req: CustomRequest, res: Response) => {
     try {
-        const blogPost = new BlogPost({ ...req.body, author: req.userId });
+        const token = (req.header('Authorization') as string).replace('Bearer ', '');
+        const decodedUserId = decodeToken(token);
+        const blogPost = new BlogPost({ ...req.body, author: decodedUserId });
         await blogPost.save();
         res.status(201).json(blogPost);
     } catch (error: any) {
