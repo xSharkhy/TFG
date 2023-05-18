@@ -3,33 +3,40 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 export const registerUser = async (req: Request, res: Response) => {
+    const { username, birthday, email, password } = req.body;
     try {
-        const user = new User(req.body);
+        const user = new User({ username, birthday, email, password });
         await user.save();
-        res.status(201).json({ message: 'User registered successfully' });
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET! as string, { expiresIn: '1h' });
+        res.status(201).json({ message: 'User registered successfully', user: user._id, role: user.role, token: token });
     } catch (error: any) {
-        res.status(400).json({ error: error.message });
+        console.error(error);
+        if (error.code === 11000) {
+            res.status(409).send('Email or username already exists');
+        } else {
+            res.status(500).send('Error creating user');
+        }
     }
 };
 
 export const loginUser = async (req: Request, res: Response) => {
-    try {
-        const { email, username, password } = req.body;
-        let user = await User.findOne({ email: email });
-        if (!user) {
-            user = await User.findOne({ username: username });
-            if (!user) {
-                return res.status(400).json({ error: 'Invalid email or username or password' });
-            }
-        }
+    const { emailOrUsername, password } = req.body;
 
-        const isMatch = await user.comparePassword(password);
-        if (!isMatch) {
-            return res.status(400).json({ error: 'Invalid email or username or password' });
+    try {
+        const user = await User.findOne({
+            $or: [{ email: emailOrUsername }, { username: emailOrUsername }],
+        });
+
+        if (!user || !(await user.comparePassword(password))) {
+            return res.status(401).send('Invalid email or password');
         }
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET! as string, { expiresIn: '1h' });
-        res.status(200).json({ token, userId: user._id });
+        if (user.role === 'admin') {
+            res.status(200).json({ token, userId: user._id, role: user.role });
+        } else {
+            res.status(200).json({ token, userId: user._id });
+        }
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }

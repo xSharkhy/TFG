@@ -8,18 +8,19 @@ import {
 import { Header, Footer, LoginForm, SignupForm, Lorem } from "./components";
 import PhaserGame from "./screens/PhaserGame";
 import HomeScreen from "./screens/HomeScreen";
-import useAuth from "./hooks/useAuth";
+import AboutUs from "./components/AboutUs";
 
 const App: React.FC = () => {
-    const { authData, loading } = useAuth();
+    const isLoggedIn =
+        localStorage.getItem("token") != undefined ? true : false;
 
     return (
         <Router>
-            <Header isLoggedIn={authData.loggedIn} />
+            <Header isLoggedIn={isLoggedIn} />
             <main className="container mx-auto">
                 <Routes>
                     <Route index path="/" element={<HomeScreen />} />
-                    {authData.loggedIn ? (
+                    {isLoggedIn ? (
                         <>
                             {/* <Route path="/account" element={<UserProfile />} /> */}
                             <Route path="/game" element={<PhaserGame />} />
@@ -42,6 +43,7 @@ const App: React.FC = () => {
                             <Route path="/signup" element={<SignupForm />} />
                         </>
                     )}
+                    <Route path="/about" element={<AboutUs />} />
                     <Route path="/terms" element={<Lorem />} />
                     <Route path="/cookies" element={<Lorem />} />
                     <Route path="/privacy" element={<Lorem />} />

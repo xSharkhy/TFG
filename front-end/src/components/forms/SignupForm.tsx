@@ -11,11 +11,6 @@ const SignupForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (password != confirmPassword) {
-            console.log(password, confirmPassword);
-            alert("Las contraseñas no coinciden");
-            return;
-        }
         try {
             const response = await axios.post(
                 "http://localhost:5000/auth/register",
@@ -26,15 +21,14 @@ const SignupForm = () => {
                     password,
                 }
             );
-            console.log(response.data.message);
+            console.log(response.data);
 
             if (response.status === 201) {
-                localStorage.setItem("token", response.data.token);
-                console.log("User created successfully");
+                console.log(response.data.message);
                 // Wait for the token to be stored
                 await new Promise((resolve) => setTimeout(resolve, 500)).then(
                     () => {
-                        window.location.href = "/"; // Redirect to the home page
+                        window.location.href = "/login"; // Redirect to the home page
                     }
                 );
             }

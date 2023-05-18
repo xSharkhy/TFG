@@ -20,6 +20,7 @@ const LoginForm = () => {
 
             if (response.status === 200) {
                 localStorage.setItem("token", response.data.token);
+                localStorage.setItem("user", response.data.role);
                 console.log("User logged in successfully");
                 // Wait htmlFor the token to be stored
                 await new Promise((resolve) => setTimeout(resolve, 500)).then(
