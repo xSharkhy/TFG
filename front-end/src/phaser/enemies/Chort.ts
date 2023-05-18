@@ -65,8 +65,8 @@ export default class Chort extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    private handleTileCollision(go: Phaser.GameObjects.GameObject): void {
-        if (go !== this) return;
+    private handleTileCollision(gameObject: Phaser.GameObjects.GameObject): void {
+        if (gameObject !== this) return;
 
         this.direction = randomDirection(this.direction);
     }

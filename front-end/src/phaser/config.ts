@@ -1,6 +1,5 @@
-import Load from './scenes/load';
-import Menu from './scenes/menu';
-import Level1 from './scenes/level1';
+import Phaser from 'phaser';
+import { Load, Menu, Level1, Interface } from './scenes';
 
 const GameConfig: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -14,7 +13,7 @@ const GameConfig: Phaser.Types.Core.GameConfig = {
             debug: true,
         }
     },
-    scene: [Load, Menu, Level1],
+    scene: [Load, Menu, Level1, Interface],
     scale: {
         zoom: 3,
     },

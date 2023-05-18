@@ -1,3 +1,5 @@
+import Phaser from 'phaser';
+
 export default class Load extends Phaser.Scene {
     private loadingBar!: Phaser.GameObjects.Graphics;
     private progressBar!: Phaser.GameObjects.Graphics;
@@ -35,7 +37,16 @@ export default class Load extends Phaser.Scene {
         this.load.tilemapTiledJSON('arena', 'tiles/level-01.json');
 
         this.load.atlas('lonk', 'characters/lonk.png', 'characters/lonk.json');
+        this.load.atlas('lank', 'characters/lank.png', 'characters/lank.json');
+        this.load.atlas('dok', 'characters/dok.png', 'characters/dok.json');
+        this.load.atlas('eldelbar', 'characters/eldelbar.png', 'characters/eldelbar.json');
+
         this.load.atlas('chort', 'enemies/chort.png', 'enemies/chort.json');
+
+        this.load.image('fullHeart', 'ui/ui_heart_full.png');
+        this.load.image('emptyHeart', 'ui/ui_heart_empty.png');
+        this.load.image('playButton', 'ui/ui_play.png');
+        this.load.image('title', 'ui/ui_sample_title.png');
     }
 
     /**

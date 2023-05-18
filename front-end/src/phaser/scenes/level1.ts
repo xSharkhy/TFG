@@ -1,10 +1,14 @@
 import debugDraw from '../utilities/debug';
+
 import { createChortAnims } from '../animations/EnemyAnims';
 import { createLonkAnims } from '../animations/CharacterAnims';
+
 import Chort from '../enemies/Chort';
 
 import Lonk from '../characters/Lonk';
 import '../characters/Lonk';
+
+import { sceneEvents } from '../events/EventContext';
 
 export default class Level1 extends Phaser.Scene {
 
@@ -24,7 +28,9 @@ export default class Level1 extends Phaser.Scene {
     }
 
     create() {
-        createLonkAnims(this.anims);
+        this.scene.run('Interface');
+
+        // createLonkAnims(this.anims);
         createChortAnims(this.anims);
 
         const { width, height } = this.scale;
@@ -48,8 +54,8 @@ export default class Level1 extends Phaser.Scene {
 
         const enemies = this.physics.add.group({
             classType: Chort,
-            createCallback: (go) => {
-                const chortGo = go as Chort;
+            createCallback: (gameObject) => {
+                const chortGo = gameObject as Chort;
                 chortGo.body.onCollide = true;
             }
         });
@@ -72,6 +78,8 @@ export default class Level1 extends Phaser.Scene {
         const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
 
         this.player.handleDamage(dir);
+
+        sceneEvents.emit('player_hp_change', this.player.health);
     }
 
     update(time: number, delta: number) {

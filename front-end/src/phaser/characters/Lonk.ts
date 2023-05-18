@@ -20,6 +20,10 @@ export default class Lonk extends Phaser.Physics.Arcade.Sprite {
     private healthState = HealthState.IDLE;
     private deltaDamage = 0;
 
+    private _health = 3;
+
+    get health(): number { return this._health; }
+
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
         super(scene, x, y, texture, frame);
         this.anims.play('idle_lonk');
@@ -28,10 +32,17 @@ export default class Lonk extends Phaser.Physics.Arcade.Sprite {
     handleDamage(dir: Phaser.Math.Vector2): void {
         if (this.healthState === HealthState.DAMAGE) return;
 
-        this.setVelocity(dir.x, dir.y);
-        this.setTint(0xff0000);
-        this.healthState = HealthState.DAMAGE;
-        this.deltaDamage = 0;
+        this._health--;
+
+        if (this._health <= 0) {
+            this.healthState = HealthState.DEAD;
+
+        } else {
+            this.setVelocity(dir.x, dir.y);
+            this.setTint(0xff0000);
+            this.healthState = HealthState.DAMAGE;
+            this.deltaDamage = 0;
+        }
     }
 
     preUpdate(time: number, delta: number): void {
