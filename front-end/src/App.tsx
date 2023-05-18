@@ -8,18 +8,18 @@ import {
 import { Header, Footer, LoginForm, SignupForm, Lorem } from "./components";
 import PhaserGame from "./screens/PhaserGame";
 import HomeScreen from "./screens/HomeScreen";
-import { useAuth } from "./hooks/useAuth";
+import useAuth from "./hooks/useAuth";
 
 const App: React.FC = () => {
-    const isLoggedIn = useAuth();
+    const { authData, loading } = useAuth();
 
     return (
         <Router>
-            <Header isLoggedIn={isLoggedIn} />
+            <Header isLoggedIn={authData.loggedIn} />
             <main className="container mx-auto">
                 <Routes>
                     <Route index path="/" element={<HomeScreen />} />
-                    {isLoggedIn && (
+                    {authData.loggedIn ? (
                         <>
                             {/* <Route path="/account" element={<UserProfile />} /> */}
                             <Route path="/game" element={<PhaserGame />} />
@@ -32,8 +32,7 @@ const App: React.FC = () => {
                                 element={<Navigate to="/" />}
                             />
                         </>
-                    )}
-                    {!isLoggedIn && (
+                    ) : (
                         <>
                             <Route
                                 path="/game"
