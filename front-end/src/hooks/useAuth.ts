@@ -1,17 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export const useAuth = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+interface AuthData {
+    loggedIn: boolean;
+    admin: boolean;
+}
+
+const useAuth = () => {
+    const [authData, setAuthData] = useState<AuthData>({ loggedIn: false, admin: false });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            // TODO: check if token is valid
-            setIsLoggedIn(true);
-        } else {
-            setIsLoggedIn(false);
-        }
+        const fetchAuthData = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/auth/verify', {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
+                });
+                setAuthData(response.data);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAuthData();
     }, []);
 
-    return isLoggedIn;
+    return { authData, loading };
 };
+
+export default useAuth;
