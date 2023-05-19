@@ -7,7 +7,7 @@ export const registerUser = async (req: Request, res: Response) => {
     try {
         const user = new User({ username, birthday, email, password });
         await user.save();
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET! as string, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET! as string, { expiresIn: '7d' });
         res.status(201).json({ message: 'User registered successfully', user: user._id, role: user.role, token: token });
     } catch (error: any) {
         console.error(error);
@@ -31,7 +31,7 @@ export const loginUser = async (req: Request, res: Response) => {
             return res.status(401).send('Invalid email or password');
         }
 
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET! as string, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET! as string, { expiresIn: '7d' });
         if (user.role === 'admin') {
             res.status(200).json({ token, userId: user._id, role: user.role });
         } else {
@@ -50,6 +50,15 @@ export const getUserProfile = async (req: Request, res: Response) => {
             return res.status(404).json({ error: 'User not found' });
         }
         res.status(200).json(user);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const getAllUsers = async (req: Request, res: Response) => {
+    try {
+        const users = await User.find();
+        res.status(200).json(users);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }

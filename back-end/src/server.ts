@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import mongoose from 'mongoose';
 import userRoutes from './routes/user.routes';
+import authRoutes from './routes/auth.routes';
 import blogRoutes from './routes/blog.routes';
 import forumRoutes from './routes/forum.routes';
 import jobApplicationRoutes from './routes/jobApplication.routes';
@@ -16,7 +17,8 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/auth', userRoutes);
+app.use('/user', userRoutes);
+app.use('/auth', authRoutes);
 app.use('/blog', blogRoutes);
 app.use('/forum', forumRoutes);
 app.use('/jobApplication', jobApplicationRoutes);

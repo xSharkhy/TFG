@@ -6,11 +6,13 @@ const HomeScreen: React.FC = () => {
         <div className="flex flex-row items-center justify-center h-full pt-48 text-white bg-dark-charcoal">
             <div className="flex flex-col items-center justify-center w-1/2">
                 <h1 className="mb-8 text-6xl font-bold text-center">
-                    Dungeon Crawler Game
+                    Demon Slayer Game
                 </h1>
                 <p className="px-12 mb-8 text-xl text-center">
                     Descend into the depths of the dungeon and battle fierce
-                    monsters in this fast-paced roguelike game.
+                    monsters in this fast-paced roguelike game. <br />
+                    <br />
+                    Made with React, TypeScript, and Phaser.
                 </p>
                 <Link
                     to="/game"

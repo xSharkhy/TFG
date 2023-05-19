@@ -4,8 +4,10 @@ import { authMiddleware } from '../middleware/jwt.middleware';
 
 const router = express.Router();
 
-router.get('/', applicationController.getAllJobApplications);
-router.post('/', applicationController.createJobApplication);
-router.delete('/:applicationId', authMiddleware, applicationController.deleteJobApplication);
+router.get('/index', authMiddleware, applicationController.getAllJobApplications);
+router.get('/show/:applicationId', authMiddleware, applicationController.getJobApplicationById);
+router.put('/update/:applicationId', authMiddleware, applicationController.updateJobApplication);
+router.post('/create', applicationController.createJobApplication);
+router.delete('/delete/:applicationId', authMiddleware, applicationController.deleteJobApplication);
 
 export default router;

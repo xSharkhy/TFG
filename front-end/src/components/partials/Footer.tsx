@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
                     </a>
                 </div>
                 <p className="text-sm">
-                    2023 &copy; Dungeon Crawler Game. All rights reserved.
+                    2023 &copy; Demon Slayer Game. All rights reserved.
                 </p>
             </div>
         </footer>

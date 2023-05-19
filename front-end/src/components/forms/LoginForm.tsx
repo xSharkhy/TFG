@@ -20,7 +20,8 @@ const LoginForm = () => {
 
             if (response.status === 200) {
                 localStorage.setItem("token", response.data.token);
-                localStorage.setItem("user", response.data.role);
+                localStorage.setItem("role", response.data.role);
+                localStorage.setItem("id", response.data.userId);
                 console.log("User logged in successfully");
                 // Wait htmlFor the token to be stored
                 await new Promise((resolve) => setTimeout(resolve, 500)).then(
@@ -98,7 +99,7 @@ const LoginForm = () => {
                 <span className="block mt-4 text-xs font-medium text-right">
                     Aún no eres usuario?{" "}
                     <Link
-                        to="/login"
+                        to="/register"
                         className="font-bold text-tomato hover:text-dark-redwood hover:underline"
                     >
                         {" "}
