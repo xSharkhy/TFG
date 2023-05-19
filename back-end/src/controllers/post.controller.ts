@@ -27,9 +27,12 @@ export const createBlogPost = async (req: CustomRequest, res: Response) => {
     try {
         const token = (req.header('Authorization') as string).replace('Bearer ', '');
         const decodedUserId = decodeToken(token);
-        const blogPost = new BlogPost({ ...req.body, author: decodedUserId });
+        const blogPost = new BlogPost({
+            ...req.body,
+            author: decodedUserId
+        });
         await blogPost.save();
-        res.status(201).json(blogPost);
+        res.status(201).json({ message: 'Blog post created successfully' });
     } catch (error: any) {
         res.status(400).json({ error: error.message });
     }

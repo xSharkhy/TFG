@@ -20,6 +20,9 @@ import HomeScreen from "./screens/HomeScreen";
 import AboutUs from "./screens/AboutUs";
 import MembersIndex from "./components/members/MembersIndex";
 import MembersShow from "./components/members/MembersShow";
+import BlogCreate from "./components/forms/BlogCreate";
+import BlogIndex from "./components/blog/BlogIndex";
+import BlogShow from "./components/blog/BlogShow";
 
 const App: React.FC = () => {
     const myId = localStorage.getItem("id");
@@ -33,13 +36,18 @@ const App: React.FC = () => {
                 <Routes>
                     <Route index path="/" element={<HomeScreen />} />
                     <Route path="/user/index" element={<MembersIndex />} />
-                    {/* 
+
                     <Route path="/blog" element={<BlogIndex />} />
-                    <Route path="/forum" element={<ForumIndex />} />
-                     */}
+                    {/* <Route path="/forum" element={<ForumIndex />} /> */}
+
                     <Route path="/jobApplication" element={<ApplyForm />} />
                     {isLoggedIn ? (
                         <>
+                            <Route
+                                path="/blog/show/:id"
+                                element={<BlogShow />}
+                            />
+
                             <Route
                                 path="/account"
                                 element={<Navigate to={`/user/show/${myId}`} />}
@@ -68,10 +76,10 @@ const App: React.FC = () => {
                                         path="/jobApplication/show/:id"
                                         element={<ApplyShow />}
                                     />
-                                    {/* <Route
+                                    <Route
                                         path="/blog/create"
                                         element={<BlogCreate />}
-                                    /> */}
+                                    />
                                 </>
                             )}
                         </>

@@ -52,7 +52,7 @@ const MembersIndex = () => {
                         <div className="mt-4 text-right">
                             <Link
                                 to={`/user/show/${member._id}`}
-                                className="text-indigo-600 hover:text-indigo-500"
+                                className="text-orchid hover:text-indigo-500"
                             >
                                 View Profile
                             </Link>
