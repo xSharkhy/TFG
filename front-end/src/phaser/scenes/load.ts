@@ -23,9 +23,6 @@ export default class Load extends Phaser.Scene {
             );
         }, this);
 
-        this.load.on('complete', () => {
-            this.scene.start('Menu');
-        }, this);
 
         // DEBUG
         for (let i = 0; i < 100; i++) {
@@ -47,6 +44,12 @@ export default class Load extends Phaser.Scene {
         this.load.image('emptyHeart', 'ui/ui_heart_empty.png');
         this.load.image('playButton', 'ui/ui_play.png');
         this.load.image('title', 'ui/ui_sample_title.png');
+
+        this.load.image('hammer', 'weapons/hammer.png');
+
+        this.load.on('complete', () => {
+            this.scene.start('Menu');
+        }, this);
     }
 
     /**

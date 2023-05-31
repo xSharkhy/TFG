@@ -1,7 +1,6 @@
 import debugDraw from '../utilities/debug';
 
 import { createChortAnims } from '../animations/EnemyAnims';
-import { createLonkAnims } from '../animations/CharacterAnims';
 
 import Chort from '../enemies/Chort';
 
@@ -14,6 +13,8 @@ export default class Level1 extends Phaser.Scene {
 
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
     private player!: Lonk;
+
+    private playerCollider!: Phaser.Physics.Arcade.Collider;
 
     constructor() {
         super('Level1');
@@ -44,17 +45,22 @@ export default class Level1 extends Phaser.Scene {
         const groundLayer: any = map.createLayer('Ground', tileset, 0, 0);
         const wallsLayer: any = map.createLayer('Walls', tileset, 0, 0);
 
+        const hammer = this.physics.add.group({
+            classType: Phaser.Physics.Arcade.Image,
+            maxSize: 10,
+        });
+
         wallsLayer.setCollisionByProperty({ collide: true });
 
         this.player = this.add.lonk(centerX, centerY, 'lonk');
+        this.player.hammer = hammer;
 
         // debugDraw(wallsLayer, this);
 
         // Enemy
 
         const enemies = this.physics.add.group({
-            classType: Chort,
-            createCallback: (gameObject) => {
+            classType: Chort, createCallback: (gameObject) => {
                 const chortGo = gameObject as Chort;
                 chortGo.body.onCollide = true;
             }
@@ -65,21 +71,32 @@ export default class Level1 extends Phaser.Scene {
         // Collisions
         this.physics.add.collider(this.player, wallsLayer);
         this.physics.add.collider(enemies, wallsLayer);
-        this.physics.add.collider(this.player, enemies, this.handlePlayerEnemyCollision, undefined, this);
+        this.physics.add.collider(hammer, wallsLayer, (obj1, obj2) => obj1.destroy(), undefined, this);
+        this.physics.add.collider(hammer, enemies, this.handleHammerEnemyCollision, undefined, this);
+        this.playerCollider = this.physics.add.collider(this.player, enemies, this.handlePlayerEnemyCollision, undefined, this);
+    }
+
+    private handleHammerEnemyCollision(hammer: Phaser.Physics.Arcade.Image, enemy: Phaser.Physics.Arcade.Image) {
+        enemy.destroy();
+        hammer.destroy();
     }
 
     private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 
-        const lizard = obj2 as Chort;
+        const chort = obj2 as Chort;
 
-        const dx = this.player.x - lizard.x;
-        const dy = this.player.y - lizard.y;
+        const dx = this.player.x - chort.x;
+        const dy = this.player.y - chort.y;
 
         const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
 
         this.player.handleDamage(dir);
 
         sceneEvents.emit('player_hp_change', this.player.health);
+
+        if (this.player.health <= 0) {
+            this.playerCollider?.destroy();
+        }
     }
 
     update(time: number, delta: number) {

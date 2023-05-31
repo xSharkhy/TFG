@@ -21,8 +21,15 @@ export default class Lonk extends Phaser.Physics.Arcade.Sprite {
     private deltaDamage = 0;
 
     private _health = 3;
+    private _hammer: Phaser.Physics.Arcade.Group;
+    private _isAnimationFlipped = false;
 
     get health(): number { return this._health; }
+
+    set hammer(hammer: Phaser.Physics.Arcade.Group) {
+        this._hammer = hammer;
+    }
+
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
         super(scene, x, y, texture, frame);
@@ -36,6 +43,9 @@ export default class Lonk extends Phaser.Physics.Arcade.Sprite {
 
         if (this._health <= 0) {
             this.healthState = HealthState.DEAD;
+            this.setTint(0xff0000);
+            this.setVelocity(0, 0);
+            this.anims.play('idle_lonk');
 
         } else {
             this.setVelocity(dir.x, dir.y);
@@ -43,6 +53,37 @@ export default class Lonk extends Phaser.Physics.Arcade.Sprite {
             this.healthState = HealthState.DAMAGE;
             this.deltaDamage = 0;
         }
+    }
+
+    private hammerHit(): void {
+        if (this.healthState === HealthState.DAMAGE || this.healthState === HealthState.DEAD) return;
+        if (!this._hammer) return;
+
+        const hammer = this._hammer.get(this.x, this.y, 'hammer') as Phaser.Physics.Arcade.Image;
+        if (!hammer) return;
+
+        const dx = this.flipX ? -1 : 1;
+        const dy = 0;
+
+        const vectorDirection = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
+
+        // detect what direction the player is facing
+        if (this.flipX) {
+            hammer.setFlipX(true);
+            hammer.setAngle(90);
+        } else {
+            hammer.setFlipX(false);
+            hammer.setAngle(-90);
+        }
+
+        hammer.setActive(true);
+        hammer.setVisible(true);
+        hammer.setRotation(vectorDirection.angle());
+
+        hammer.x += vectorDirection.x;
+        hammer.y += vectorDirection.y;
+
+        hammer.setVelocity(vectorDirection.x * 25, vectorDirection.y * 25);
     }
 
     preUpdate(time: number, delta: number): void {
@@ -66,6 +107,10 @@ export default class Lonk extends Phaser.Physics.Arcade.Sprite {
 
         if (this.healthState === HealthState.DAMAGE || this.healthState === HealthState.DEAD) return;
         if (!cursors) return;
+        if (Phaser.Input.Keyboard.JustDown(cursors.space!)) {
+            this.hammerHit();
+            return;
+        }
 
         const speed = 100;
         const direction = cursors.left.isDown ? 'left' : cursors.right.isDown ? 'right' : cursors.up.isDown ? 'up' : cursors.down.isDown ? 'down' : 'idle';
@@ -73,11 +118,13 @@ export default class Lonk extends Phaser.Physics.Arcade.Sprite {
         switch (direction) {
             case 'left':
                 this.flipX = true;
+                this._isAnimationFlipped = true;
                 this.anims.play('walk_lonk', true);
                 this.setVelocityX(-speed);
                 break;
             case 'right':
                 this.flipX = false;
+                this._isAnimationFlipped = false;
                 this.anims.play('walk_lonk', true);
                 this.setVelocityX(speed);
                 break;

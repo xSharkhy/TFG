@@ -37,8 +37,14 @@ export default class Interface extends Phaser.Scene {
             if (index < healthPoints) {
                 heart.setTexture('fullHeart');
             } else {
+                this.cameras.main.shake(300);
                 heart.setTexture('emptyHeart');
             }
+
+            if (healthPoints === 0) {
+                this.scene.launch('GameOver');
+            }
+
         })
     }
 }

@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { Load, Menu, Level1, Interface } from './scenes';
+import GameOver from './scenes/GameOver';
 
 const GameConfig: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -13,7 +14,7 @@ const GameConfig: Phaser.Types.Core.GameConfig = {
             debug: true,
         }
     },
-    scene: [Load, Menu, Level1, Interface],
+    scene: [Load, Menu, Level1, Interface, GameOver],
     scale: {
         zoom: 3,
     },
