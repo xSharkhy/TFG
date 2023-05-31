@@ -4,8 +4,10 @@ import { HiOutlineTrash, HiOutlinePencil } from "react-icons/hi";
 
 const BlogShow: React.FC = () => {
     const getId = () => window.location.href.split("/").pop();
-    const token = localStorage.getItem("token");
-    const isAdmin = localStorage.getItem("role") === "admin";
+    const { token, role } = JSON.parse(
+        localStorage.getItem("authData") || "{}"
+    );
+    const isAdmin = role === "admin";
     const [blog, setBlog] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const [editedBlog, setEditedBlog] = useState({ title: "", content: "" });
@@ -96,11 +98,11 @@ const BlogShow: React.FC = () => {
                                 </button>
                             </div>
                         )}
-                        <h1 className="mt-1 text-4xl font-extrabold tracking-tight text-gray-50 sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
+                        <h1 className="mt-1 text-4xl font-extrabold tracking-tight text-blog-0 dark:text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl">
                             <span className="block">{blog.title}</span>
                         </h1>
                     </div>
-                    <p className="mt-3 text-base text-gray-200 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                    <p className="mt-3 text-base text-blog-1 dark:text-white sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                         Esto es un ejemplo de párrafo introductorio para el
                         blog. <br /> Lorem ipsum dolor sit amet, consectetur
                         adipiscing elit. Duis viverra sem et urna blandit
@@ -113,14 +115,14 @@ const BlogShow: React.FC = () => {
                         nulla vel, aliquet massa. <br />
                         <span
                             id="author"
-                            className="block mt-5 text-gray-900"
+                            className="block mt-5 text-blog-0 dark:text-white"
                         ></span>
                         <br />
                     </p>
                 </div>
             </div>
             <hr />
-            <div className="mx-auto mt-16 prose prose-lg text-gray-300 prose-indigo">
+            <div className="mx-auto mt-16 prose prose-lg text-blog-1 dark:text-white prose-indigo">
                 <p>
                     {isEditing ? (
                         <textarea

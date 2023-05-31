@@ -2,7 +2,7 @@ import React from "react";
 
 const Lorem: React.FC = () => {
     return (
-        <div className="flex flex-row items-center justify-center h-full text-white py-36 bg-dark-charcoal">
+        <div className="flex flex-row items-center justify-center h-full mt-1 py-36 text-principal-0 dark:text-white">
             <div className="flex flex-col items-center justify-center w-2/3">
                 <h1 className="mb-8 text-6xl font-bold text-center">
                     Lorem ipsum dolor sit amet

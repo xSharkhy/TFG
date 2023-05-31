@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const MembersShow = () => {
+    const authData = JSON.parse(localStorage.getItem("authData") || "{}");
     const getId = () => window.location.href.split("/").pop();
-    const token = localStorage.getItem("token");
+    const token = authData.token;
     const [member, setMember] = useState([]);
-    const itsMe = localStorage.getItem("id") == getId();
+    const itsMe = authData.id == getId();
 
     useEffect(() => {
         const fetchMember = async () => {

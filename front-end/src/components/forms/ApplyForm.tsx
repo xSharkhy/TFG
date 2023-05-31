@@ -41,7 +41,7 @@ const ApplyForm = () => {
                 <div className="mb-6">
                     <label
                         htmlFor="name"
-                        className="block mb-2 text-sm font-medium text-gray-900"
+                        className="block mb-2 text-sm font-medium text-principal-1"
                     >
                         Nombre
                     </label>
@@ -52,13 +52,13 @@ const ApplyForm = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Juanito Juan"
-                        className="form-input focus:border-orchid focus:ring-orchid"
+                        className="form-input focus:border-principal-2 focus:ring-principal-2"
                         required
                     />
                 </div>
                 <label
                     htmlFor="email"
-                    className="block mb-2 text-sm font-medium text-gray-900"
+                    className="block mb-2 text-sm font-medium text-principal-1"
                 >
                     Correo electrónico
                 </label>
@@ -70,14 +70,14 @@ const ApplyForm = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="john.doe@company.com"
-                        className="form-input focus:border-orchid focus:ring-orchid"
+                        className="form-input focus:border-principal-2 focus:ring-principal-2"
                         required
                     />
                 </div>
                 <div className="mb-6">
                     <label
                         htmlFor="message"
-                        className="block mb-2 text-sm font-medium text-gray-900"
+                        className="block mb-2 text-sm font-medium text-principal-1"
                     >
                         Mensaje
                     </label>
@@ -87,13 +87,13 @@ const ApplyForm = () => {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder="Escribe tu mensaje aquí"
-                        className="form-input focus:border-orchid focus:ring-orchid"
+                        className="form-input focus:border-principal-2 focus:ring-principal-2"
                         required
                     />
                 </div>
                 <button
                     type="submit"
-                    className="w-full py-2 text-sm font-medium text-center text-white rounded bg-tomato hover:bg-dark-redwood focus:outline-none focus:ring-4"
+                    className="w-full py-2 text-sm font-medium text-center text-white duration-200 rounded bg-principal-0 hover:bg-principal-1 hover:scale-105 focus:outline-none focus:ring-4"
                 >
                     Enviar solicitud!
                 </button>

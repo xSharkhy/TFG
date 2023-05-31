@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface HeaderProps {
     isLoggedIn: boolean;
@@ -8,9 +8,12 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     const [isAccountOpen, setIsAccountOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [headerStyles, setHeaderStyles] = useState("");
     const accountRef = useRef<HTMLDivElement>(null);
+    const location = useLocation();
 
-    const isAdmin = localStorage.getItem("role") == "admin";
+    const isAdmin =
+        JSON.parse(localStorage.getItem("authData") || "{}").role == "admin";
 
     const handleAccountClick = () => {
         setIsAccountOpen(!isAccountOpen);
@@ -21,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
     };
 
     const handleLogoutClick = () => {
-        localStorage.removeItem("token");
+        localStorage.removeItem("authData");
         window.location.href = "/";
     };
 
@@ -42,9 +45,47 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
         };
     }, []);
 
+    useEffect(() => {
+        const updateHeaderStyles = () => {
+            const headerStylesInBlog = location.pathname.includes("/blog")
+                ? "bg-blog-3 dark:bg-blog-0 text-blog-2 dark:text-blog-2"
+                : "bg-principal-3 dark:bg-principal-0 text-principal-2 dark:text-principal-2";
+            setHeaderStyles(headerStylesInBlog);
+
+            // Toggle document.body class
+            if (headerStylesInBlog.includes("blog")) {
+                document.body.classList.add("bg-blog-3", "dark:bg-blog-0");
+                document.body.classList.remove(
+                    "bg-principal-3",
+                    "dark:bg-principal-0"
+                );
+            } else {
+                document.body.classList.add(
+                    "bg-principal-3",
+                    "dark:bg-principal-0"
+                );
+                document.body.classList.remove("bg-blog-3", "dark:bg-blog-0");
+            }
+        };
+
+        // Update styles on component mount
+        updateHeaderStyles();
+
+        // Listen for changes in the URL
+        const unlisten = () => {
+            updateHeaderStyles();
+        };
+        window.addEventListener("popstate", unlisten);
+
+        // Clean up the listener when the component is unmounted
+        return () => {
+            window.removeEventListener("popstate", unlisten);
+        };
+    }, [location]);
+
     return (
-        <header className=" bg-dark-charcoal">
-            <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <header className={`z-50 shadow-sm shadow-black ${headerStyles}`}>
+            <div className="px-2 mx-auto sm:px-6 lg:px-8">
                 <div className="relative flex items-center justify-between h-16">
                     <div
                         className="absolute inset-y-0 left-0 flex items-center sm:hidden"
@@ -52,7 +93,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     >
                         <button
                             type="button"
-                            className="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                            className="inline-flex items-center justify-center p-2 rounded-md hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                             aria-controls="mobile-menu"
                             aria-expanded="false"
                         >
@@ -111,37 +152,61 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                                 </Link>
                                 <Link
                                     to="/about"
-                                    className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                                    className={`px-3 py-2 text-sm font-medium rounded-md ${
+                                        headerStyles.includes("blog")
+                                            ? "text-blog-0 dark:text-blog-3 hover:bg-blog-0 hover:text-blog-3 dark:hover:bg-blog-3 dark:hover:text-blog-0 "
+                                            : "text-principal-0 dark:text-principal-3 hover:bg-principal-0 hover:text-principal-3 dark:hover:bg-principal-3 dark:hover:text-principal-0 "
+                                    }`}
                                 >
                                     Nosotros
                                 </Link>
                                 <Link
                                     to="/blog"
-                                    className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                                    className={`px-3 py-2 text-sm font-medium rounded-md ${
+                                        headerStyles.includes("blog")
+                                            ? "text-blog-0 dark:text-blog-3 hover:bg-blog-0 hover:text-blog-3 dark:hover:bg-blog-3 dark:hover:text-blog-0 "
+                                            : "text-principal-0 dark:text-principal-3 hover:bg-principal-0 hover:text-principal-3 dark:hover:bg-principal-3 dark:hover:text-principal-0 "
+                                    }`}
                                 >
                                     Blog
                                 </Link>
                                 <Link
                                     to="/foro"
-                                    className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                                    className={`px-3 py-2 text-sm font-medium rounded-md ${
+                                        headerStyles.includes("blog")
+                                            ? "text-blog-0 dark:text-blog-3 hover:bg-blog-0 hover:text-blog-3 dark:hover:bg-blog-3 dark:hover:text-blog-0 "
+                                            : "text-principal-0 dark:text-principal-3 hover:bg-principal-0 hover:text-principal-3 dark:hover:bg-principal-3 dark:hover:text-principal-0 "
+                                    }`}
                                 >
                                     Foro
                                 </Link>
                                 <Link
                                     to="/jobApplication"
-                                    className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                                    className={`px-3 py-2 text-sm font-medium rounded-md ${
+                                        headerStyles.includes("blog")
+                                            ? "text-blog-0 dark:text-blog-3 hover:bg-blog-0 hover:text-blog-3 dark:hover:bg-blog-3 dark:hover:text-blog-0 "
+                                            : "text-principal-0 dark:text-principal-3 hover:bg-principal-0 hover:text-principal-3 dark:hover:bg-principal-3 dark:hover:text-principal-0 "
+                                    }`}
                                 >
                                     Vacantes
                                 </Link>
                                 <Link
-                                    to="/user/index"
-                                    className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                                    to="/user"
+                                    className={`px-3 py-2 text-sm font-medium rounded-md ${
+                                        headerStyles.includes("blog")
+                                            ? "text-blog-0 dark:text-blog-3 hover:bg-blog-0 hover:text-blog-3 dark:hover:bg-blog-3 dark:hover:text-blog-0 "
+                                            : "text-principal-0 dark:text-principal-3 hover:bg-principal-0 hover:text-principal-3 dark:hover:bg-principal-3 dark:hover:text-principal-0 "
+                                    }`}
                                 >
                                     Miembros
                                 </Link>
                                 <Link
                                     to="/game"
-                                    className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                                    className={`px-3 py-2 text-sm font-medium rounded-md ${
+                                        headerStyles.includes("blog")
+                                            ? "text-blog-0 dark:text-blog-3 hover:bg-blog-0 hover:text-blog-3 dark:hover:bg-blog-3 dark:hover:text-blog-0 "
+                                            : "text-principal-0 dark:text-principal-3 hover:bg-principal-0 hover:text-principal-3 dark:hover:bg-principal-3 dark:hover:text-principal-0 "
+                                    }`}
                                 >
                                     Juega!
                                 </Link>
@@ -251,38 +316,62 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     <div className="px-2 pt-2 pb-3 space-y-1">
                         <Link
                             to="#"
-                            className="block px-3 py-2 text-base font-medium text-white bg-gray-900 rounded-md"
+                            className={`block px-3 py-2 text-base font-medium rounded-md ${
+                                headerStyles.includes("blog")
+                                    ? "text-blog-0 dark:text-blog-3 hover:bg-blog-0 hover:text-blog-3 dark:hover:bg-blog-3 dark:hover:text-blog-0 "
+                                    : "text-principal-0 dark:text-principal-3 hover:bg-principal-0 hover:text-principal-3 dark:hover:bg-principal-3 dark:hover:text-principal-0 "
+                            }`}
                             aria-current="page"
                         >
                             Inicio
                         </Link>
                         <Link
                             to="/about"
-                            className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                            className={`block px-3 py-2 text-base font-medium rounded-md ${
+                                headerStyles.includes("blog")
+                                    ? "text-blog-0 dark:text-blog-3 hover:bg-blog-0 hover:text-blog-3 dark:hover:bg-blog-3 dark:hover:text-blog-0 "
+                                    : "text-principal-0 dark:text-principal-3 hover:bg-principal-0 hover:text-principal-3 dark:hover:bg-principal-3 dark:hover:text-principal-0 "
+                            }`}
                         >
                             Nosotros
                         </Link>
                         <Link
                             to="/blog"
-                            className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                            className={`block px-3 py-2 text-base font-medium rounded-md ${
+                                headerStyles.includes("blog")
+                                    ? "text-blog-0 dark:text-blog-3 hover:bg-blog-0 hover:text-blog-3 dark:hover:bg-blog-3 dark:hover:text-blog-0 "
+                                    : "text-principal-0 dark:text-principal-3 hover:bg-principal-0 hover:text-principal-3 dark:hover:bg-principal-3 dark:hover:text-principal-0 "
+                            }`}
                         >
                             Blog
                         </Link>
                         <Link
                             to="/foro"
-                            className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                            className={`block px-3 py-2 text-base font-medium rounded-md ${
+                                headerStyles.includes("blog")
+                                    ? "text-blog-0 dark:text-blog-3 hover:bg-blog-0 hover:text-blog-3 dark:hover:bg-blog-3 dark:hover:text-blog-0 "
+                                    : "text-principal-0 dark:text-principal-3 hover:bg-principal-0 hover:text-principal-3 dark:hover:bg-principal-3 dark:hover:text-principal-0 "
+                            }`}
                         >
                             Foro
                         </Link>
                         <Link
                             to="/jobApplication"
-                            className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                            className={`block px-3 py-2 text-base font-medium rounded-md ${
+                                headerStyles.includes("blog")
+                                    ? "text-blog-0 dark:text-blog-3 hover:bg-blog-0 hover:text-blog-3 dark:hover:bg-blog-3 dark:hover:text-blog-0 "
+                                    : "text-principal-0 dark:text-principal-3 hover:bg-principal-0 hover:text-principal-3 dark:hover:bg-principal-3 dark:hover:text-principal-0 "
+                            }`}
                         >
                             Vacantes
                         </Link>
                         <Link
-                            to="/user/index"
-                            className="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                            to="/user"
+                            className={`block px-3 py-2 text-base font-medium rounded-md ${
+                                headerStyles.includes("blog")
+                                    ? "text-blog-0 dark:text-blog-3 hover:bg-blog-0 hover:text-blog-3 dark:hover:bg-blog-3 dark:hover:text-blog-0 "
+                                    : "text-principal-0 dark:text-principal-3 hover:bg-principal-0 hover:text-principal-3 dark:hover:bg-principal-3 dark:hover:text-principal-0 "
+                            }`}
                         >
                             Miembros
                         </Link>

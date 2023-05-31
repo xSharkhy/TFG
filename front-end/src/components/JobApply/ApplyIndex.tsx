@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const ApplyIndex = () => {
     const [applications, setApplications] = useState([]);
     const navigate = useNavigate();
-    const token = localStorage.getItem("token");
+    const token = JSON.parse(localStorage.getItem("authData") || "{}").token;
 
     useEffect(() => {
         const fetchApplications = async () => {
@@ -63,8 +63,10 @@ const ApplyIndex = () => {
     };
 
     return (
-        <div className="container min-h-screen py-20 mx-auto bg-gray-200">
-            <h1 className="text-3xl font-bold text-center">Job Applications</h1>
+        <div className="container min-h-screen py-20 mx-auto mt-1">
+            <h1 className="text-3xl font-bold text-center dark:text-white">
+                Job Applications
+            </h1>
             <div className="flex my-10">
                 <table className="items-center justify-center w-3/4 mx-auto border-collapse table-auto">
                     <thead>

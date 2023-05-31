@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 
 const MembersIndex = () => {
     const [members, setMembers] = React.useState([]);
-    const isLoggedIn = localStorage.getItem("token") != undefined;
+    const isLoggedIn =
+        JSON.parse(localStorage.getItem("authData") || "{}").token !==
+        undefined;
 
     useEffect(() => {
         const fetchMembers = async () => {
@@ -52,7 +54,7 @@ const MembersIndex = () => {
                         <div className="mt-4 text-right">
                             <Link
                                 to={`/user/show/${member._id}`}
-                                className="text-orchid hover:text-indigo-500"
+                                className="px-4 py-2 text-sm font-bold duration-300 ease-in-out rounded-lg text-principal-0 dark:hover:text-principal-3 dark:hover:bg-principal-0 hover:bg-principal-3 hover:text-principal-0"
                             >
                                 View Profile
                             </Link>

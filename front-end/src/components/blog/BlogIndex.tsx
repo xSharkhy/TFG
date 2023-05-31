@@ -19,16 +19,16 @@ const BlogIndex = () => {
     }, []);
 
     return (
-        <div className="w-full pt-16 bg-gray-900 ">
+        <div className="w-full h-screen pt-16 ">
             <div className="px-4 py-8 mx-auto lg:py-16">
-                <h2 className="mb-8 text-6xl font-bold text-center text-white">
+                <h2 className="mb-8 text-6xl font-bold text-center text-blog-0 dark:text-white ">
                     Blog de Desarrollo
                 </h2>
                 <div className="grid justify-center grid-cols-1 gap-12 md:grid-cols-2">
                     {blogs.map((blog) => (
                         <Link
                             to={`/blog/show/${blog._id}`}
-                            className="grid items-center grid-cols-1 gap-4 bg-gray-800 border border-gray-700 rounded-lg shadow md:grid-cols-2 hover:bg-gray-700"
+                            className="grid items-center grid-cols-1 gap-4 border rounded-lg shadow shadow-gray-900 border-blog-0 bg-blog-3 md:grid-cols-2 hover:bg-blog-2 dark:bg-blog-0 dark:border-blog-0 dark:hover:bg-blog-1"
                             key={blog._id}
                         >
                             <img
@@ -37,7 +37,7 @@ const BlogIndex = () => {
                                 alt=""
                             />
                             <div className="flex flex-col justify-between p-4 leading-normal">
-                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 truncate dark:text-white">
                                     {blog.title}
                                 </h5>
                                 <p className="mb-3 overflow-hidden font-normal text-gray-700 truncate dark:text-gray-400">

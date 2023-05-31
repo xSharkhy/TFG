@@ -4,7 +4,7 @@ import { HiOutlineTrash } from "react-icons/hi";
 
 const ApplyShow = () => {
     const getId = () => window.location.href.split("/").pop();
-    const token = localStorage.getItem("token");
+    const token = JSON.parse(localStorage.getItem("authData") || "{}").token;
     const [application, setApplication] = useState([]);
 
     useEffect(() => {

@@ -159,7 +159,7 @@ const SignupForm = () => {
                             Estoy de acuerdo con la{" "}
                             <Link
                                 to="/privacy-policy"
-                                className=" text-sienna hover:underline"
+                                className=" text-principal-2 hover:underline"
                             >
                                 política de privacidad
                             </Link>
@@ -168,7 +168,7 @@ const SignupForm = () => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full py-2 text-sm font-medium text-center text-white rounded bg-tomato hover:bg-dark-redwood focus:outline-none focus:ring-4"
+                        className="w-full py-2 text-sm font-medium text-center text-white duration-200 rounded bg-principal-0 hover:bg-principal-1 hover:scale-105 focus:outline-none focus:ring-4"
                     >
                         Registrarse!
                     </button>
@@ -176,7 +176,7 @@ const SignupForm = () => {
                         Ya estás registrado?{" "}
                         <Link
                             to="/login"
-                            className="font-bold text-tomato hover:text-dark-redwood hover:underline"
+                            className="font-bold text-principal-1 hover:text-principal-2 hover:underline"
                         >
                             {" "}
                             Accede.

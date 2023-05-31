@@ -10,24 +10,27 @@ import {
     Footer,
     LoginForm,
     SignupForm,
-    Lorem,
     ApplyForm,
     ApplyIndex,
     ApplyShow,
+    Lorem,
+    MembersIndex,
+    MembersShow,
+    BlogIndex,
+    BlogShow,
+    BlogCreate,
 } from "./components";
 import PhaserGame from "./screens/PhaserGame";
 import HomeScreen from "./screens/HomeScreen";
 import AboutUs from "./screens/AboutUs";
-import MembersIndex from "./components/members/MembersIndex";
-import MembersShow from "./components/members/MembersShow";
-import BlogCreate from "./components/forms/BlogCreate";
-import BlogIndex from "./components/blog/BlogIndex";
-import BlogShow from "./components/blog/BlogShow";
-
 const App: React.FC = () => {
-    const myId = localStorage.getItem("id");
-    const isLoggedIn = localStorage.getItem("token") != undefined;
-    const isAdmin = localStorage.getItem("role") == "admin";
+    const {
+        id: myId,
+        token,
+        role,
+    } = JSON.parse(localStorage.getItem("authData") || "{}");
+    const isLoggedIn = token !== undefined;
+    const isAdmin = role === "admin";
 
     return (
         <Router>
@@ -35,29 +38,38 @@ const App: React.FC = () => {
             <main className="container mx-auto">
                 <Routes>
                     <Route index path="/" element={<HomeScreen />} />
-                    <Route path="/user/index" element={<MembersIndex />} />
-
-                    <Route path="/blog" element={<BlogIndex />} />
-                    {/* <Route path="/forum" element={<ForumIndex />} /> */}
-
-                    <Route path="/jobApplication" element={<ApplyForm />} />
+                    <Route path="/user">
+                        <Route index element={<MembersIndex />} />
+                        <Route path="show/:id" element={<MembersShow />} />
+                    </Route>
+                    <Route path="/blog">
+                        <Route index element={<BlogIndex />} />
+                        {isLoggedIn && (
+                            <Route path="show/:id" element={<BlogShow />} />
+                        )}
+                        {isAdmin && (
+                            <Route path="create" element={<BlogCreate />} />
+                        )}
+                    </Route>
+                    <Route path="/jobApplication">
+                        <Route index element={<ApplyForm />} />
+                        {isAdmin && (
+                            <>
+                                <Route path="index" element={<ApplyIndex />} />
+                                <Route
+                                    path="show/:id"
+                                    element={<ApplyShow />}
+                                />
+                            </>
+                        )}
+                    </Route>
                     {isLoggedIn ? (
                         <>
-                            <Route
-                                path="/blog/show/:id"
-                                element={<BlogShow />}
-                            />
-
                             <Route
                                 path="/account"
                                 element={<Navigate to={`/user/show/${myId}`} />}
                             />
                             <Route path="/game" element={<PhaserGame />} />
-                            <Route
-                                path="/user/show/:id"
-                                element={<MembersShow />}
-                            />
-
                             <Route
                                 path="/login"
                                 element={<Navigate to="/" />}
@@ -66,26 +78,10 @@ const App: React.FC = () => {
                                 path="/register"
                                 element={<Navigate to="/" />}
                             />
-                            {isAdmin && (
-                                <>
-                                    <Route
-                                        path="/jobApplication/index"
-                                        element={<ApplyIndex />}
-                                    />
-                                    <Route
-                                        path="/jobApplication/show/:id"
-                                        element={<ApplyShow />}
-                                    />
-                                    <Route
-                                        path="/blog/create"
-                                        element={<BlogCreate />}
-                                    />
-                                </>
-                            )}
                         </>
                     ) : (
                         <>
-                            <Route path="/game" element={<Navigate to="/" />} />
+                            <Route path="/game" element={<LoginForm />} />
                             <Route path="/login" element={<LoginForm />} />
                             <Route path="/register" element={<SignupForm />} />
                         </>
@@ -94,23 +90,20 @@ const App: React.FC = () => {
                     <Route path="/terms" element={<Lorem />} />
                     <Route path="/cookies" element={<Lorem />} />
                     <Route path="/privacy" element={<Lorem />} />
-                    <Route
-                        path="*"
-                        element={
-                            <div className="flex flex-col items-center justify-center h-full text-white py-36 bg-dark-charcoal">
-                                <h1 className="mb-16 text-6xl font-bold text-center">
-                                    ...Oops!
-                                </h1>
-                                <h2 className="text-2xl font-bold text-center">
-                                    Page not found
-                                </h2>
-                            </div>
-                        }
-                    />
+                    <Route path="*" element={<NotFoundPage />} />
                 </Routes>
             </main>
             <Footer />
         </Router>
+    );
+};
+
+const NotFoundPage: React.FC = () => {
+    return (
+        <div className="flex flex-col items-center justify-center h-full mt-1 text-principal-0 dark:text-white py-36 bg-principal-3 dark:bg-principal-0">
+            <h1 className="mb-16 text-6xl font-bold text-center">...Oops!</h1>
+            <h2 className="text-2xl font-bold text-center">Page not found</h2>
+        </div>
     );
 };
 

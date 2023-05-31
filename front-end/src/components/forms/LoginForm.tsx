@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm: React.FC = () => {
     const [emailOrUsername, setEmailOrUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -16,19 +16,18 @@ const LoginForm = () => {
                     password,
                 }
             );
-            console.log(response.data.message);
 
             if (response.status === 200) {
-                localStorage.setItem("token", response.data.token);
-                localStorage.setItem("role", response.data.role);
-                localStorage.setItem("id", response.data.userId);
-                console.log("User logged in successfully");
-                // Wait htmlFor the token to be stored
-                await new Promise((resolve) => setTimeout(resolve, 500)).then(
-                    () => {
-                        window.location.href = "/"; // Redirect to the home page
-                    }
+                localStorage.setItem(
+                    "authData",
+                    JSON.stringify({
+                        token: response.data.token,
+                        role: response.data.role,
+                        id: response.data.userId,
+                    })
                 );
+                console.log("User logged in successfully");
+                window.location.href = "/"; // Redirect to the home page
             }
         } catch (error) {
             alert(error.response.data.message); // Show an error message
@@ -41,7 +40,7 @@ const LoginForm = () => {
                 <div className="mb-6">
                     <label
                         htmlFor="email"
-                        className="block mb-2 text-sm font-medium text-gray-900"
+                        className="block mb-2 text-sm font-medium text-principal-1"
                     >
                         Correo electrónico o nombre de usuario
                     </label>
@@ -51,7 +50,7 @@ const LoginForm = () => {
                         name="email"
                         value={emailOrUsername}
                         onChange={(e) => setEmailOrUsername(e.target.value)}
-                        className="form-input focus:border-orchid focus:ring-orchid"
+                        className="form-input focus:border-principal-2 focus:ring-principal-2"
                         placeholder="john.doe@company.com"
                         required
                     />
@@ -59,7 +58,7 @@ const LoginForm = () => {
                 <div className="mb-6">
                     <label
                         htmlFor="password"
-                        className="block mb-2 text-sm font-medium text-gray-900"
+                        className="block mb-2 text-sm font-medium text-principal-1"
                     >
                         Contraseña
                     </label>
@@ -69,7 +68,7 @@ const LoginForm = () => {
                         name="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="form-input focus:border-orchid focus:ring-orchid"
+                        className="form-input focus:border-principal-2 focus:ring-principal-2"
                         placeholder="•••••••••"
                         required
                     />
@@ -85,14 +84,14 @@ const LoginForm = () => {
                     </div>
                     <label
                         htmlFor="remember"
-                        className="ml-2 text-sm font-medium text-gray-900"
+                        className="ml-2 text-sm font-medium text-principal-1"
                     >
                         Mantener la sesión iniciada.
                     </label>
                 </div>
                 <button
                     type="submit"
-                    className="w-full py-2 text-sm font-medium text-center text-white rounded bg-tomato hover:bg-dark-redwood focus:outline-none focus:ring-4"
+                    className="w-full py-2 text-sm font-medium text-center text-white duration-200 rounded bg-principal-0 hover:bg-principal-1 hover:scale-105 focus:outline-none focus:ring-4"
                 >
                     Iniciar Sesión!
                 </button>
@@ -100,7 +99,7 @@ const LoginForm = () => {
                     Aún no eres usuario?{" "}
                     <Link
                         to="/register"
-                        className="font-bold text-tomato hover:text-dark-redwood hover:underline"
+                        className="font-bold text-principal-1 hover:text-principal-2 hover:underline"
                     >
                         {" "}
                         Regístrate aquí!
