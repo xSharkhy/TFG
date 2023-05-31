@@ -2,15 +2,16 @@ import { Response, NextFunction } from 'express';
 import CustomRequest, { decodeToken } from '../interfaces/types';
 
 export const authMiddleware = (req: CustomRequest, res: Response, next: NextFunction) => {
+    const authorizationHeader = req.header('Authorization');
+    if (!authorizationHeader) {
+        return res.status(401).json({ error: 'Please authenticate' });
+    }
+
     try {
-        console.log('Authorization header:', req.header('Authorization'));
-        const token = (req.header('Authorization') as string).replace('Bearer ', '');
-        console.log('Token:', token);
-        const decodedUserId = decodeToken(token);
-        req.userId = decodedUserId;
+        const token = authorizationHeader.split(' ')[1];
+        req.userId = decodeToken(token);
         next();
     } catch (error) {
-        console.error('Auth middleware error:', error);
         res.status(401).json({ error: 'Please authenticate' });
     }
 };
