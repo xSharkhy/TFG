@@ -33,7 +33,7 @@ const BlogCreate = () => {
                 { title, content, author },
                 {
                     headers: {
-                        Authorization: token,
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             );

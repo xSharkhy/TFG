@@ -130,16 +130,22 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn }) => {
                     </div>
                     <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
                         <div className="flex items-center flex-shrink-0">
-                            <img
-                                className="block w-auto h-8 lg:hidden"
-                                src="/ui/ICONO.svg"
-                                alt="Revels"
-                            />
-                            <img
+                            <picture>
+                                <source
+                                    srcSet="/ui/ICONO.svg"
+                                    media="(prefers-color-scheme: dark)"
+                                />
+                                <img
+                                    className="w-auto h-8 lg:hidden"
+                                    src="/ui/ICONO-DARK.svg"
+                                    alt="Revels"
+                                />
+                                <img
                                 className="hidden w-auto h-8 lg:block"
                                 src="/ui/ICONO.svg"
                                 alt="Revels"
                             />
+                            </picture>
                         </div>
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
